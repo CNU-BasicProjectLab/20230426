@@ -29,6 +29,7 @@ class _FileApp extends State<FileApp> {
 
   void writeFileTest(String str) async {
     var dir = await getApplicationDocumentsDirectory();
+    print(dir);
     var file = await File('${dir.path}/fileTest.txt').readAsString();
     file = file + '\n' + str;
     File('${dir.path}/fileTest.txt').writeAsStringSync(file);
@@ -47,10 +48,11 @@ class _FileApp extends State<FileApp> {
     if (firstCheck == null || firstCheck == false || fileExist == false) {
       pref.setBool(key, true);
       try {
-        var file = await DefaultAssetBundle.of(context)
-            .loadString('repo/fileTest.txt');
+        var file = await DefaultAssetBundle.of(context).loadString('repo/fileTest.txt');
+        File('${dir.path}/fileTest.txt').writeAsStringSync(file);
         var array = file.split('\n');
         for (var item in array) {
+          print(item);
           items.add(item);
         }
       } catch (e) {
@@ -64,7 +66,7 @@ class _FileApp extends State<FileApp> {
         print(item);
         items.add(item);
       }
-      return itemList;
+      return items;
     }
   }
 
